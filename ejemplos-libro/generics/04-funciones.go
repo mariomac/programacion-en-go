@@ -8,5 +8,7 @@ func Parte[T any](elementos []T) ([]T, []T) {
 }
 
 func main() {
+	fmt.Println(Parte[int]([]int{1, 2, 3}))
+	// Mencionar que es mejor así, porque hay inferencia de tipos
 	fmt.Println(Parte([]int{1, 2, 3}))
 }
