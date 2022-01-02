@@ -27,7 +27,7 @@ func (c *Cola) Extrae() Persona {
 func main() {
 	tanda := Cola{}
 	tanda.Introduce(Persona{Nombre: "Juan", Genero: "H"})
-	tanda.Introduce(Persona{Nombre: "Maria del Carmen", Genero: "M"})
+	tanda.Introduce(Persona{Nombre: "Mari Carmen", Genero: "M"})
 	tanda.Introduce(Persona{Nombre: "Juan Carlos", Genero: "H"})
 
 	fmt.Println("despachando a", tanda.Extrae().Nombre)

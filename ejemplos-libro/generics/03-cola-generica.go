@@ -42,8 +42,4 @@ func main() {
 	codigos.Introduce(7)
 	codigos.Introduce(8)
 
-	var siguiente int = codigos.Extrae()
-
-	_ = siguiente
-
 }

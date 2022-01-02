@@ -5,9 +5,20 @@ import (
 	"strings"
 )
 
-// a partir de interfaces comunes
-func Mayusculas[T fmt.Stringer](elem T) string {
-	return strings.ToUpper(elem.String())
+func JuntaStrings[T fmt.Stringer](elems ...T) string {
+	str := strings.Builder{}
+	for _, e := range elems {
+		str.WriteString(e.String())
+	}
+	return str.String()
+}
+
+func JuntaStrings2(elems ...fmt.Stringer) string {
+	str := strings.Builder{}
+	for _, e := range elems {
+		str.WriteString(e.String())
+	}
+	return str.String()
 }
 
 type Persona struct {
@@ -20,11 +31,11 @@ func (p Persona) String() string {
 }
 
 // interfaces de restricciones
-type Byte interface {
-	int8 | uint8
+type OchoBits interface {
+	~int8 | ~uint8
 }
 
-func InvierteBits[T Byte](n T) T {
+func InvierteBits[T OchoBits](n T) T {
 	var inv T
 	for i := 0; i < 8; i++ {
 		inv <<= 1
@@ -36,16 +47,16 @@ func InvierteBits[T Byte](n T) T {
 
 type Edad uint8
 
+func (t Edad) String() string {
+	return fmt.Sprint(uint8(t))
+}
+
 func main() {
 	p := Persona{Nombre: "Lidia", Genero: "M"}
-	fmt.Println(Mayusculas[Persona](p))
-	fmt.Printf("%b\n", InvierteBits[uint8](0b01001100))
-	fmt.Printf("%b\n", InvierteBits[int8](0b01001100))
-	fmt.Printf("%b\n", InvierteBits[byte](0b01001100))
+	fmt.Println(JuntaStrings(p, p))
+	fmt.Println(JuntaStrings2(p, Edad(33)))
+	fmt.Printf("%08b\n", InvierteBits[uint8](0b01001000))
+	fmt.Printf("%08b\n", InvierteBits(int8(0b01100100)))
+	fmt.Printf("%b\n", InvierteBits(Edad(33)))
 
-	// esto nos da un error
-	//  Edad does not implement Byte (possibly missing ~ for uint8 in constraint Byte)
-	// mostrar el nuevo tipo Byte "arreglado"
-	// mostrar después todos los tipos del paquete constraints
-	fmt.Printf("%b\n", InvierteBits[Edad](123))
 }
